@@ -51,16 +51,5 @@ contract Social is ERC721 {
         Post memory targetPost = idToPost[postId];
 
         require(targetPost.originalPoster != address(0), "Post does not exist");
-
-        require(msg.value >= targetPost.price, "Purchase price not met");
-
-        uint256 royalty = (msg.value * 500) / 10000;
-
-        payable(targetPost.originalPoster).call{value : royalty};
-
-        payable(ownerOf(postId)).call{value : msg.value - royalty};
-
-        _transfer(ownerOf(postId), msg.sender, postId);
-        
     }
 }
